@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.13;
 
 contract AssignmentTest {
     // state variables are forced to be allocated on "storage"
