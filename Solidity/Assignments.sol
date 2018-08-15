@@ -1,12 +1,12 @@
 pragma solidity ^0.4.13;
 
 contract AssignmentTest {
-    // state variables are enforced on "storage"
+    // state variables are always on "storage"
     uint256 stateValue;
     uint256[2] stateArray;
     uint256[2] stateArray_2;
     
-    // function parameters allocated on "memory" by default
+    // function arguments always on "memory" 
     function test(uint256 inValue, uint256[2] inArray) public {
         
         /*********************************************
@@ -36,7 +36,7 @@ contract AssignmentTest {
         /*********************************************
          * reference type assignments 
         **********************************************/
-        uint256[2] localArrayDefault; // default data location is "storage"
+        uint256[2] localArrayDefault; // default data location of local variable of reference type is "storage"
         uint256[2] storage localArrayStorage;
         uint256[2] memory localArrayMemory;
 
