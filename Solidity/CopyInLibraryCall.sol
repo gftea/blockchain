@@ -13,26 +13,35 @@ library callee {
     }
 }
 contract caller {
-    uint256[2] stateArray;
 
-    // function parameters allocated on "memory" by default
+    uint256[2] stateArray;
+    
+    // function arguments always on "memory"
     function test() public {
         uint256[2] memory localMemoryVariable;
         uint256[2] storage localStorageVariable;
         
-        localMemoryVariable[0] = 1;
-        localStorageVariable[0] = 9;
-        // For internal library call, always copy by reference within same type
+        localMemoryVariable[0] = 0;
+        localStorageVariable[0] = 0;
+        //// For internal library call, 
+        // copy by reference between variables of same data location
         callee.internalCall(localMemoryVariable, localStorageVariable);
         assert(localMemoryVariable[0] == 1111);
         assert(localStorageVariable[0] == 2222);
 
-        localMemoryVariable[0] = 1;
-        localStorageVariable[0] = 9;
-        // For public library call
-        // copy by reference only for same storage type
+        
+        //// For public library call, 
+        //// copy by reference only between variables of "storage" location
+        localMemoryVariable[0] = 0;
+        localStorageVariable[0] = 0;
+        // 1. pass in local variable 
         callee.publicCall(localMemoryVariable, localStorageVariable);
-        assert(localMemoryVariable[0] == 1);
+        assert(localMemoryVariable[0] == 0);
         assert(localStorageVariable[0] == 9999);
+        // 2. pass in state variable
+        stateArray[0] = 0;
+        callee.publicCall(localMemoryVariable, stateArray);
+        assert(stateArray[0] == 9999);
+
     }
 }
