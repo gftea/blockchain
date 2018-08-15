@@ -79,7 +79,7 @@ contract AssignmentTest {
         localArrayStorage = stateArray; 
         localArrayStorage[0] = 8888;
         assert(localArrayStorage[0] == stateArray[0]);
-        // 1. from another local-storage variable
+        // 2. from another local-storage variable
         localArrayStorage = localArrayDefault; 
         localArrayStorage[0] = 9999;
         assert(localArrayStorage[0] == localArrayDefault[0]);   
